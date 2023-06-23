@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "959910779907",
+    "project_id": "my-app-futter-web",
+    "storage_bucket": "my-app-futter-web.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959910779907:android:5edb0055108edda6cc4236",
+        "android_client_info": {
+          "package_name": "com.example.admin_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959910779907-iup26k8g36dkjb8gp3icjml26a7ccp74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3QhrUvD5YItMJxoZU8zhF6t4yctoKXqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959910779907-iup26k8g36dkjb8gp3icjml26a7ccp74.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
