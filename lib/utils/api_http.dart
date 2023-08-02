@@ -7,6 +7,11 @@ import 'package:firebase_database/firebase_database.dart';
 class ApiHtttp {
   static final rtdb = FirebaseDatabase.instanceFor(app: Firebase.app(), databaseURL: 'https://myappflutter-58850-default-rtdb.firebaseio.com/');
 
+  static Future httpGetQuery(String base, String reference) async {
+    final resp = await rtdb.ref().orderByChild(reference);
+    return resp.get();
+  }
+
   static Future httpGet(String base) async {
     final resp = await rtdb.ref().child(base).get();
     return resp.value;

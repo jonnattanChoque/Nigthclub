@@ -14,7 +14,6 @@ class TablesView extends StatefulWidget {
 }
 
 class _TablesViewState extends State<TablesView> {
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
   @override
   void initState() {
@@ -24,7 +23,8 @@ class _TablesViewState extends State<TablesView> {
 
   @override
   Widget build(BuildContext context) {
-    final tables = Provider.of<TablesProvider>(context).tables;
+    final tableProvider = Provider.of<TablesProvider>(context);
+    final tables = tableProvider.tables;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -34,15 +34,18 @@ class _TablesViewState extends State<TablesView> {
           Text('Mesas', style: CustomLabels.h1),
           const SizedBox(height: 30),
           PaginatedDataTable(
-            columns: const [
-              DataColumn(label: Text('ID')),
-              DataColumn(label: Text('Nombre')),
-              DataColumn(label: Text('Acciones')),
+            columns: [
+              const DataColumn(label: Text('ID')),
+              DataColumn(label: const Text('Nombre'), onSort: (colIndex, _ ) {
+                tableProvider.sortColumnIndex = colIndex;
+                tableProvider.sort((product) => product.name);
+              }),
+              const DataColumn(label: Text('Acciones')),
             ],
             source: TablesDTS(tables, context),
             header: const Text('Listado de mesas'),
-            onRowsPerPageChanged: (value) => setState(() { _rowsPerPage = value ?? 10; } ),
-            rowsPerPage: _rowsPerPage,
+            onRowsPerPageChanged: (value) => setState(() { } ),
+            rowsPerPage: 20,
             actions: [
               CustomIconButton(onPressed: () {
                 showModalBottomSheet(
@@ -50,7 +53,7 @@ class _TablesViewState extends State<TablesView> {
                   context: context, 
                   builder: (_) => const TableModal()
                 );
-              }, text: 'Crear mesa', icon: Icons.add_outlined)
+              }, text: 'Crear mesa', icon: Icons.add_outlined, color: const Color.fromARGB(255, 58, 222, 222),)
             ],
           )
         ],

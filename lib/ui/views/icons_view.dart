@@ -14,10 +14,10 @@ class IconsView extends StatelessWidget {
         children: [
           Text('Icons', style: CustomLabels.h1),
           const SizedBox(height: 30),
-          Wrap(
+          const Wrap(
             crossAxisAlignment: WrapCrossAlignment.start,
             direction: Axis.horizontal,
-            children: const [
+            children: [
               WhiteCard(
                 title: 'ac_unit_outlined',
                 width: 170,

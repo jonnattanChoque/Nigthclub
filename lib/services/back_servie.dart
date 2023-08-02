@@ -8,8 +8,9 @@ class BackService {
     return json;
   }
 
-  newData(Map<String, Object> data, String table) async {
-    var uuid = const Uuid().v1();
+  newData(Map<String, Object> data, String table, String? id) async {
+    var uuid = '';
+    (id != null) ? uuid = id : uuid = const Uuid().v1();
     var created = (DateTime.now().millisecondsSinceEpoch);
     data["created_at"] = created.toString();
     await ApiHtttp.httpNew('$table/$uuid', data);

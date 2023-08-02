@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
         final loginFormProvider = Provider.of<LoginFormProvider>(context, listen: false); 
 
         return Container(
-          color: Colors.black,
+          color: const Color.fromARGB(255, 98, 96, 96),
           margin: const EdgeInsets.only(top: 100),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Center(

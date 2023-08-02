@@ -24,7 +24,7 @@ class _DashBoardlayoutState extends State<DashBoardlayout> with SingleTickerProv
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color(0xffEDF1F2),
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Row(

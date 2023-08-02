@@ -1,5 +1,7 @@
 import 'package:admin_dashboard/datatables/products_source.dart';
 import 'package:admin_dashboard/providers/products_provider.dart';
+import 'package:admin_dashboard/router/router.dart';
+import 'package:admin_dashboard/services/navigation_service.dart';
 import 'package:admin_dashboard/ui/shared/buttons/custom_icon_button.dart';
 import 'package:admin_dashboard/ui/shared/labels/custom_labels.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ class ProductView extends StatelessWidget {
             columns: [
               const DataColumn(label: Text('ID')),
               const DataColumn(label: Text('Imagen')),
+              const DataColumn(label: Text('Categoría')),
               DataColumn(label: const Text('Nombre'), onSort: (colIndex, _ ) {
                 productsProvider.sortColumnIndex = colIndex;
                 productsProvider.sort((product) => product.name);
@@ -42,14 +45,11 @@ class ProductView extends StatelessWidget {
             onPageChanged: (page) {
 
             },
+            rowsPerPage: 100,
             actions: [
               CustomIconButton(onPressed: () {
-                showModalBottomSheet(
-                  backgroundColor: Colors.transparent,
-                  context: context, 
-                  builder: (_) => const Text('uno')
-                );
-              }, text: 'Crear mesa', icon: Icons.add_outlined)
+                NavigationService.navigateTo(Flurorouter.newProductRouter);
+              }, text: 'Crear producto', icon: Icons.add_outlined, color: const Color.fromARGB(255, 58, 222, 222),)
             ],
           )
         ],

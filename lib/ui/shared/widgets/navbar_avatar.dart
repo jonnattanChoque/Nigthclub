@@ -9,12 +9,15 @@ class NavbarAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return ClipOval(
-      child: GestureDetector(
-        onTap: () => authProvider.logout(),
-        child: SizedBox(
-          width: 30,
-          height: 30,
-          child: Image.network('https://st4.depositphotos.com/9998432/22597/v/450/depositphotos_225976914-stock-illustration-person-gray-photo-placeholder-man.jpg'),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => authProvider.logout(),
+          child: const SizedBox(
+            width: 30,
+            height: 30,
+            child: Icon(Icons.exit_to_app_outlined),
+          ),
         ),
       ),
     );

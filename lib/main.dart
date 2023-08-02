@@ -1,5 +1,10 @@
+import 'package:admin_dashboard/providers/card_provider.dart';
+import 'package:admin_dashboard/providers/categories_provider.dart';
+import 'package:admin_dashboard/providers/forms/card_form_provider.dart';
 import 'package:admin_dashboard/providers/forms/product_form_provider.dart';
+import 'package:admin_dashboard/providers/orders_provider.dart';
 import 'package:admin_dashboard/providers/products_provider.dart';
+import 'package:admin_dashboard/providers/sales_provider.dart';
 import 'package:admin_dashboard/providers/tables_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +47,13 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => TablesProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => CategoriesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => ProductsProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => ProductFormProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => OrdersProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => SalesProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => CardProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => CardFormProvider()),
       ],
       child: const MyApp(),
     );
@@ -51,36 +61,39 @@ class AppState extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
+  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.dark);
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Admin dashboard',
-      initialRoute: Flurorouter.rootRouter,
-      onGenerateRoute: Flurorouter.router.generator,
-      navigatorKey: NavigationService.navigatorKey,
-      scaffoldMessengerKey: NotificationsService.messageKey,
-      builder:(_, child) {
-        final authProvider = Provider.of<AuthProvider>(context);
-        if(authProvider.authStatus == AuthStatus.checking) {
-          return const SplashLayout();
+    return ValueListenableBuilder<ThemeMode>(
+        valueListenable: themeNotifier,
+        builder: (_, ThemeMode currentMode, __) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Admin Night Drinks',
+            
+            initialRoute: Flurorouter.rootRouter,
+            onGenerateRoute: Flurorouter.router.generator,
+            navigatorKey: NavigationService.navigatorKey,
+            scaffoldMessengerKey: NotificationsService.messageKey,
+            builder:(_, child) {
+              final authProvider = Provider.of<AuthProvider>(context);
+              if(authProvider.authStatus == AuthStatus.checking) {
+                return const SplashLayout();
+              }
+              
+              if(authProvider.authStatus == AuthStatus.authenticated) {
+                return DashBoardlayout(child: child!);
+              } else {
+                return AuthLayout(child: child!);
+              }
+            },
+            theme: ThemeData(primarySwatch: Colors.amber),
+            darkTheme: ThemeData.dark(),
+            themeMode: currentMode,
+          );
         }
-        
-        if(authProvider.authStatus == AuthStatus.authenticated) {
-          return DashBoardlayout(child: child!);
-        } else {
-          return AuthLayout(child: child!);
-        }
-      },
-      theme: ThemeData.light().copyWith(
-        scrollbarTheme: const ScrollbarThemeData().copyWith(
-          thumbColor: MaterialStateProperty.all(
-            Colors.grey[700]?.withOpacity(0.5)
-          )
-        )
-      ),
     );
   }
 }

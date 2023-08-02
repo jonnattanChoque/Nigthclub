@@ -21,13 +21,13 @@ class CustomIconButton extends StatelessWidget {
       onPressed: () => onPressed(),
       style: ButtonStyle(
         shape: MaterialStateProperty.all(const StadiumBorder()),
-        backgroundColor: MaterialStateProperty.all(color.withOpacity(0.5)),
+        backgroundColor: MaterialStateProperty.all(color.withOpacity(0.9)),
         overlayColor: MaterialStateProperty.all(color.withOpacity(0.2)),
       ),
       child: Row(
         children: [
-          Icon(icon, color: Colors.white),
-          Text(text, style: const TextStyle(color: Colors.white))
+          Icon(icon, color: const Color.fromARGB(255, 18, 2, 2)),
+          Text(text, style: const TextStyle(color: Color.fromARGB(255, 3, 0, 0)))
         ],
       ),
     );

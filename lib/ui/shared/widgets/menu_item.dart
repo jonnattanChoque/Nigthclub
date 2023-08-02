@@ -20,7 +20,7 @@ class _MenuItemState extends State<MenuItem> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
-      color: isHovered ? Colors.white.withOpacity(0.1) : widget.isActive ? Colors.white.withOpacity(0.3) : Colors.transparent,
+      color: isHovered ? const Color.fromARGB(255, 22, 20, 20).withOpacity(0.1) : widget.isActive ? Colors.white.withOpacity(0.3) : Colors.transparent,
       child: Material(
         color: Colors.transparent,
         child: InkWell(

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:admin_dashboard/ui/shared/widgets/logo.dart';
 import 'package:admin_dashboard/ui/shared/widgets/menu_item.dart';
 import 'package:provider/provider.dart';
-
 import 'widgets/text_separator.dart';
 
 class Sidebar extends StatelessWidget {
@@ -31,25 +30,21 @@ class Sidebar extends StatelessWidget {
         children: [
           const Logo(),
           const SizedBox(height: 50),
-          const TextSeparator(text: 'main'),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRouter, text: 'Dashboard', icon: Icons.compass_calibration_outlined, onPressed: () => navigateTo(Flurorouter.dashboardRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.tableRouter, text: 'Mesas', icon: Icons.deck_outlined, onPressed: () => navigateTo(Flurorouter.tableRouter)),
+          const TextSeparator(text: 'Administración'),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRouter, text: 'Categorias', icon: Icons.category_outlined, onPressed: () => navigateTo(Flurorouter.categoriesRouter)),
           MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.productsRouter, text: 'Productos', icon: Icons.production_quantity_limits, onPressed: () => navigateTo(Flurorouter.productsRouter)),
-          // MenuItem(text: 'Analytics', icon: Icons.show_chart_outlined, onPressed: () => print('Dashboard')),
-          // MenuItem(text: 'Categories', icon: Icons.layers_outlined, onPressed: () => print('Dashboard')),
-          // MenuItem(text: 'Discount', icon: Icons.attach_money_outlined, onPressed: () => print('Dashboard')),
-          // MenuItem(text: 'Customers', icon: Icons.people_alt_outlined, onPressed: () => print('Dashboard')),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.tableRouter, text: 'Mesas', icon: Icons.deck_outlined, onPressed: () => navigateTo(Flurorouter.tableRouter)),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.cardRouter, text: 'Tarjeta', icon: Icons.card_membership_outlined, onPressed: () => navigateTo(Flurorouter.cardRouter)),
           
           const SizedBox(height: 40),
-          const TextSeparator(text: 'UI elements'),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.iconsRouter, text: 'Icons', icon: Icons.list_alt_outlined, onPressed: () => navigateTo(Flurorouter.iconsRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRouter, text: 'Marketing', icon: Icons.mark_email_read_outlined, onPressed: () => print('Dashboard')),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRouter, text: 'Campaigns', icon: Icons.note_add_outlined, onPressed: () => print('Dashboard')),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.blankRouter, text: 'Black', icon: Icons.post_add_outlined, onPressed: () => navigateTo(Flurorouter.blankRouter)),
+          const TextSeparator(text: 'Pedidos'),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.ordersRouter, text: 'Ordenes', icon: Icons.money_outlined , onPressed: () => navigateTo(Flurorouter.ordersRouter)),
 
           const SizedBox(height: 40),
-          const TextSeparator(text: 'Exit'),
-          MenuItem( text: 'Logout', icon: Icons.exit_to_app_outlined, onPressed: () => print('Dashboard')),
+          const TextSeparator(text: 'Reportes'),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.salesRouter, text: 'Total', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.salesRouter)),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.salesTodayRouter, text: 'Diaría', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.salesTodayRouter)),
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.salesMonthRouter, text: 'Mensual', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.salesMonthRouter)),
         ],
       ),
     );
@@ -58,8 +53,8 @@ class Sidebar extends StatelessWidget {
   BoxDecoration buildBoxDecoration() => const BoxDecoration(
     gradient: LinearGradient(
       colors: [
-        Color(0xff092044),
-        Color(0xff092030),
+        Color.fromARGB(255, 166, 4, 131),
+        Color.fromARGB(255, 112, 5, 89),
       ]
     ),
     boxShadow: [

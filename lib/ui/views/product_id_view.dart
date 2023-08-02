@@ -10,6 +10,7 @@ import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:admin_dashboard/ui/shared/cards/white_card.dart';
 import 'package:admin_dashboard/ui/shared/inputs/custom_inputs.dart';
 import 'package:admin_dashboard/ui/shared/labels/custom_labels.dart';
+import 'package:admin_dashboard/utils/local_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,9 @@ class ProductIDView extends StatefulWidget {
 class _ProductIDViewState extends State<ProductIDView> {
   Products? product;
   ImageProvider<Object> newImage = const AssetImage('no-image.jpg');
-
+  String dropdownValue = 'Seleccione';
+  List<String> listCategories = ['a', 'b'];
+  
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,10 @@ class _ProductIDViewState extends State<ProductIDView> {
     final productFormProvider = Provider.of<ProductFormProvider>(context, listen: false);
     final productID = productProvider.getProductsById(widget.uid);
 
+    final jsonString = LocalStorage().getInternalCategory() as String;
+    listCategories = jsonString.replaceAll(',', '').replaceAll('[', '').replaceAll(']', '').split(' ');
+    listCategories.insert(0, dropdownValue);
+    
     if(productID == 0) {
       Future.delayed(Duration.zero, () {
         NavigationService.replaceTo(Flurorouter.productsRouter);
@@ -46,7 +53,6 @@ class _ProductIDViewState extends State<ProductIDView> {
           Uint8List decodedbytes = base64.decode(product!.image);
           newImage = Image.memory(decodedbytes).image;
         }
-        //
       });
     }
   }
@@ -72,7 +78,7 @@ class _ProductIDViewState extends State<ProductIDView> {
               ),
             ),
           if(product != null )
-            _ProductVIewBody(nameProduct: product?.name, newImage: newImage)
+            _ProductVIewBody(nameProduct: product?.name, newImage: newImage, categoryProduct: product?.category, listCategories: listCategories)
         ],
       )
     );
@@ -81,11 +87,14 @@ class _ProductIDViewState extends State<ProductIDView> {
 
 class _ProductVIewBody extends StatelessWidget {
   final String? nameProduct;
+  final String? categoryProduct;
   final ImageProvider<Object> newImage;
+  final List<String> listCategories;
 
   const _ProductVIewBody({
     required this.newImage,
-    this.nameProduct,
+    required this.categoryProduct,
+    this.nameProduct, required this.listCategories,
   });
 
   @override
@@ -98,7 +107,7 @@ class _ProductVIewBody extends StatelessWidget {
         TableRow(
           children: [
             _ImageProduct(name: nameProduct, newImage: newImage ),
-            const _ProductViewForm()
+            _ProductViewForm(dropdownValue: categoryProduct ?? '', listCategories: listCategories)
           ]
         )
       ],
@@ -106,15 +115,24 @@ class _ProductVIewBody extends StatelessWidget {
   }
 }
 
-class _ProductViewForm extends StatelessWidget {
-  const _ProductViewForm();
+class _ProductViewForm extends StatefulWidget {
+  final String dropdownValue;
+  final List<String> listCategories;
+
+  const _ProductViewForm({Key? key, required this.dropdownValue, required this.listCategories}) : super(key: key);
+
+  @override
+  State<_ProductViewForm> createState() => _ProductViewFormState();
+}
+
+class _ProductViewFormState extends State<_ProductViewForm> {
 
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final product = productFormProvider.product;
-
+  
     return WhiteCard(
       title: "Productos",
       child: Form(
@@ -122,6 +140,35 @@ class _ProductViewForm extends StatelessWidget {
         autovalidateMode: AutovalidateMode.always,
         child: Column(
           children: [
+            DropdownButtonFormField(
+              validator: (value) {
+                if (value == 'Seleccione') return 'Seleccione una categoría';
+                return null;
+              },
+              isExpanded: true,
+              decoration: CustomInputs.formInputDecoration(
+                hint: 'Categoría',
+                label: 'Categoría',
+                icon: Icons.category_outlined
+              ),
+              value: widget.dropdownValue,
+              items: widget.listCategories
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                );
+              }).toList(), 
+              onChanged: (String? newValue) {
+                setState(() {
+                  productFormProvider.product?.category = newValue!;
+                });
+              },
+            ),
+            const SizedBox(height: 20,),
             TextFormField(
               initialValue: product?.name,
               decoration: CustomInputs.formInputDecoration(
@@ -162,10 +209,10 @@ class _ProductViewForm extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all(Colors.indigo),
                   shadowColor: MaterialStateProperty.all(Colors.transparent)
                 ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.save_outlined),
-                    Text('Guardar')
+                child: const Row(
+                  children: [
+                    Icon(Icons.save_outlined, color: Colors.white,),
+                    Text('Guardar', style: TextStyle(color: Colors.white),)
                   ],
                 ),
               ),
@@ -226,6 +273,7 @@ class _ImageProductState extends State<_ImageProduct> {
                         border: Border.all(color: Colors.white, width: 5)
                       ),
                       child: FloatingActionButton(
+                        heroTag: 'productUpdate',
                         backgroundColor: Colors.indigo,
                         child: const Icon(Icons.camera_alt_outlined, size: 20,),
                         onPressed: () async {
@@ -263,7 +311,7 @@ class _ImageProductState extends State<_ImageProduct> {
 void onFormSubmit(ProductFormProvider lfp, ProductsProvider prodp) async {
   final isValid = lfp.validateForm();
   if(isValid) {
-    final update = await prodp.updateProduct(lfp.product?.name ?? "", lfp.product?.price ?? "", lfp.product?.image ?? "", lfp.product?.id ?? "");
+    final update = await prodp.updateProduct(lfp.product?.category ?? "", lfp.product?.name ?? "", lfp.product?.price ?? "", lfp.product?.image ?? "", lfp.product?.id ?? "");
     if (update) {
       NotificationsService.showSnackBar('Producto actualizado', false);
       Future.delayed(Duration.zero, () {

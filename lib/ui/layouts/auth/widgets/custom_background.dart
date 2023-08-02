@@ -9,15 +9,7 @@ class BackgroundAuth extends StatelessWidget {
       decoration: buildBoxDecoration(),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
-        child: const Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: Image(
-              image: AssetImage('twitter-white-logo.png'),
-              width: 400,
-            ),
-          ),
-        ),
+        
       ),
     );
   }
@@ -25,7 +17,7 @@ class BackgroundAuth extends StatelessWidget {
   BoxDecoration buildBoxDecoration() {
     return const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('twitter-bg.png'),
+          image: AssetImage('logo.png'),
           fit: BoxFit.cover
         )
       );

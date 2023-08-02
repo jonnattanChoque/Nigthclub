@@ -17,9 +17,9 @@ class ProductsProvider extends ChangeNotifier with BackService {
     notifyListeners();
   }
 
-  newProduct(String name, String price) async {
-    final data = { "name": name, "price": price };
-    final response = await newData(data, 'bar/products');
+  newProduct(String category, String name, String price, String image) async {
+    final data = { "category": category, "name": name, "price": price, "image": image };
+    final response = await newData(data, 'bar/products', null);
     final newProduct = await ProductResponse().jsonDecodeSingle(response);
     if(newProduct != null) {
       products.add(newProduct);
@@ -30,9 +30,9 @@ class ProductsProvider extends ChangeNotifier with BackService {
     }
   }
 
-  updateProduct(String name, String price, String image, String id) async {
+  updateProduct(String category, String name, String price, String image, String id) async {
     if(name.isNotEmpty) {
-      final data = { "name": name, "price": price, "image": image};
+      final data = { "id": id, "category": category, "name": name, "price": price, "image": image};
       final response = await updateData(data, 'bar/products/$id');
       final updateTable = await ProductResponse().jsonDecodeSingle(response);
       if(updateTable != null) {

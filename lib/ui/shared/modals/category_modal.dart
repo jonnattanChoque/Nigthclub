@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:admin_dashboard/models/table_model.dart';
-import 'package:admin_dashboard/providers/tables_provider.dart';
+import 'package:admin_dashboard/models/category_model.dart';
+import 'package:admin_dashboard/providers/categories_provider.dart';
 import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:admin_dashboard/ui/shared/buttons/custom_outline_button.dart';
 import 'package:admin_dashboard/ui/shared/inputs/custom_inputs.dart';
@@ -9,16 +9,16 @@ import 'package:admin_dashboard/ui/shared/labels/custom_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TableModal extends StatefulWidget {
-  final Tables? table;
+class CategoryModal extends StatefulWidget {
+  final Category? table;
 
-  const TableModal({Key? key, this.table}) : super(key: key);
+  const CategoryModal({Key? key, this.table}) : super(key: key);
 
   @override
-  State<TableModal> createState() => _TableModalState();
+  State<CategoryModal> createState() => _CategoryModalState();
 }
 
-class _TableModalState extends State<TableModal> {
+class _CategoryModalState extends State<CategoryModal> {
   String name = '';
   String? id;
 
@@ -28,9 +28,10 @@ class _TableModalState extends State<TableModal> {
     id = widget.table?.id;
     name = widget.table?.name ?? '';
   }
+
   @override
   Widget build(BuildContext context) {
-    final tableProvider = Provider.of<TablesProvider>(context, listen: false);
+    final categoriesProvider = Provider.of<CategoriesProvider>(context, listen: false);
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -42,8 +43,8 @@ class _TableModalState extends State<TableModal> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.table?.name ?? 'Nueva mesa', style: CustomLabels.h1.copyWith(color: const Color.fromARGB(255, 18, 0, 0))),
-              IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.close, color: Colors.white))
+              Text(widget.table?.name ?? 'Nueva categoría', style: CustomLabels.h1.copyWith(color: const Color.fromARGB(255, 18, 0, 0))),
+              IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.close, color: Color.fromARGB(255, 7, 0, 0)))
             ],
           ),
           Divider(color: Colors.white.withOpacity(0.3)),
@@ -57,11 +58,11 @@ class _TableModalState extends State<TableModal> {
               },
             initialValue: widget.table?.name,
             decoration: CustomInputs.loginInputDecoration(
-              hint: 'Nombre de la mesa', 
-              label: 'Mesa', 
+              hint: 'Nombre de la categoría', 
+              label: 'Categoría', 
               icon: Icons.deck_outlined
             ),
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Color.fromARGB(255, 9, 0, 0)),
           ),
           Container(
             margin: const EdgeInsets.only(top: 30),
@@ -70,14 +71,14 @@ class _TableModalState extends State<TableModal> {
               onPressed: () async {
                 if(name.isNotEmpty) {
                   if(id == null) {
-                    var response = await tableProvider.newTable(name);
+                    var response = await categoriesProvider.newCategory(name);
                     if(response) {
-                      NotificationsService.showSnackBar('Mesa creada', false);
+                      NotificationsService.showSnackBar('Categoría creada', false);
                     }
                   } else {
-                    var response = await tableProvider.updateTable(name, id!);
+                    var response = await categoriesProvider.updateCategory(name, id!);
                     if(response) {
-                      NotificationsService.showSnackBar('Mesa actualizada', false);
+                      NotificationsService.showSnackBar('Categoría actualizada', false);
                     }
                   }
                   Navigator.of(context).pop();

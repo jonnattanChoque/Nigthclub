@@ -1,9 +1,10 @@
 class TableResponse {
   List<Tables> tables = [];
+  List<String> tableNames = [];
   
   Future jsonDecodes(Map<String, dynamic> json) async {
     json.forEach((key, value) {
-      final table = Tables(id: key, name: value["name"], date: value["date"]);
+      final table = Tables(id: key, name: value["name"], date: value["created_at"]);
       tables.add(table);
     });
 
@@ -11,8 +12,16 @@ class TableResponse {
   }
 
   Future jsonDecodeSingle(Map<String, dynamic> json) async {
-    final table = Tables(id: json['id'], name: json["name"], date: json["date"]);
+    final table = Tables(id: json['id'], name: json["name"], date: "nullclear");
     return table;
+  }
+
+  jsonDecodeString(Map<String, dynamic> json) {
+    json.forEach((key, value) {
+      tableNames.add(value["name"]);
+    });
+    var ascending = tableNames..sort();
+    return ascending;
   }
 }
 

@@ -1,5 +1,4 @@
 import 'package:admin_dashboard/ui/layouts/auth/widgets/custom_background.dart';
-import 'package:admin_dashboard/ui/layouts/auth/widgets/custom_links_bar.dart';
 import 'package:admin_dashboard/ui/layouts/auth/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
@@ -11,20 +10,21 @@ class AuthLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final yourScrollController = ScrollController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Scrollbar(
+        controller: yourScrollController,
         thumbVisibility: true,
         
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
             (size.width > 1000) ? _DesktopBody(child: child) : _MobileBody(child: child),
-            // LinkBar
-            const CustomLinkBar()
           ],
         ),
-      )
+      ),
     );
   }
 }
@@ -40,7 +40,7 @@ class _DesktopBody extends StatelessWidget {
 
     return Container(
       width: size.width,
-      height: size.height * 0.95,
+      height: size.height,
       color: Colors.black,
       child: Row(
         children: [
@@ -49,7 +49,7 @@ class _DesktopBody extends StatelessWidget {
           Container(
             width: 600,
             height: double.infinity,
-            color: Colors.black,
+            color: const Color.fromARGB(255, 98, 96, 96),
             child: Column(
               children: [
                 const CustomTitle(),

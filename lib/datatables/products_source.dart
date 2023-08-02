@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:admin_dashboard/models/product_model.dart';
-import 'package:admin_dashboard/providers/tables_provider.dart';
+import 'package:admin_dashboard/providers/products_provider.dart';
 import 'package:admin_dashboard/services/navigation_service.dart';
 import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +26,14 @@ class ProductsDTS extends DataTableSource {
       newImage = Image.memory(decodedbytes).image;
     }
 
-    final tableProvider = Provider.of<TablesProvider>(context, listen: false);
+    final productProvider = Provider.of<ProductsProvider>(context, listen: false);
 
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text((index + 1).toString())),
         DataCell( ClipOval(child: Image(image: newImage, width: 35, height: 35)) ),
+        DataCell(Text(productModel.category)),
         DataCell(Text(productModel.name)),
         DataCell(Text(productModel.price)),
         DataCell(
@@ -40,31 +41,25 @@ class ProductsDTS extends DataTableSource {
             child: Row(
               children: [
                 IconButton(
-                // onPressed: () {
-                  // showModalBottomSheet(
-                  //   backgroundColor: Colors.transparent,
-                  //   context: context, 
-                  //   builder: (_) => TableModal(table: productModel)
-                  // );
-                // }, 
-                onPressed: () {
-                  NavigationService.navigateTo('/dashboard/product/${productModel.id}');
-                },
-                icon: const Icon(Icons.edit_outlined)),
+                  onPressed: () {
+                    NavigationService.navigateTo('/dashboard/product/${productModel.id}');
+                  },
+                  icon: const Icon(Icons.edit_outlined)
+                ),
                 const SizedBox(width: 20),
                 IconButton(onPressed: () {
                   final dialog = AlertDialog(
                     title: const Text('Borrar'),
-                    content: Text('Borrar la mesa ${productModel.name} ?'),
+                    content: Text('Borrar el producto ${productModel.name}?'),
                     actions: [
                       TextButton(onPressed: () {
                         Navigator.of(context).pop();
                       }, child: const Text('No')),
                       TextButton(onPressed: () async {
-                        final response = await tableProvider.removeTable(productModel.id);
+                        final response = await productProvider.removeProduct(productModel.id);
                         Navigator.of(context).pop();
                         if(response) {
-                          NotificationsService.showSnackBar('Mesa eliminada', false);
+                          NotificationsService.showSnackBar('Producto eliminado', false);
                         }
                       }, child: const Text('Si')),
                     ],

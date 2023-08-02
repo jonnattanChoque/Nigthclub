@@ -11,15 +11,13 @@ class WhiteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
+      width: double.infinity,
+      height: 500,
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(color: Colors.white.withOpacity(0.5), blurRadius: 5)
-        ]
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

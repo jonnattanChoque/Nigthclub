@@ -26,7 +26,7 @@ class AuthProvider extends ChangeNotifier {
       LocalStorage.prefs.setString('token', _token!),
       authStatus = AuthStatus.authenticated,
       notifyListeners(),
-      NavigationService.replaceTo(Flurorouter.dashboardRouter)
+      NavigationService.replaceTo(Flurorouter.categoriesRouter)
     }).onError((error, stackTrace) => {
       NotificationsService.showSnackBar('Error al hacer login, intente de nuevo', true)
     });
@@ -39,7 +39,7 @@ class AuthProvider extends ChangeNotifier {
       LocalStorage.prefs.setString('token', _token!),
       authStatus = AuthStatus.authenticated,
       notifyListeners(),
-      NavigationService.replaceTo(Flurorouter.dashboardRouter)
+      NavigationService.replaceTo(Flurorouter.categoriesRouter)
     }).onError((error, stackTrace) => {
       NotificationsService.showSnackBar('Error al registrar, intente de nuevo', true)
     });
