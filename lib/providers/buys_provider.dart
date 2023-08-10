@@ -1,40 +1,40 @@
-import 'package:admin_dashboard/models/category_model.dart';
+import 'package:admin_dashboard/models/buys_model.dart';
 import 'package:admin_dashboard/services/back_servie.dart';
 import 'package:admin_dashboard/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 
-class NotesProvider extends ChangeNotifier with BackService {
-  List<Category> categories = [];
+class BuysProvider extends ChangeNotifier with BackService {
+  List<Buy> buys = [];
 
-  getNotes() async {
-    final json = await getData('bar/categories');
-    categories = await CategoryResponse().jsonDecodes(json);
+  getBuys() async {
+    final json = await getData('bar/buys');
+    buys = await BuysResponse().jsonDecodes(json);
     LocalStorage().setInternalCategory(json);
     notifyListeners();
   }
 
-  newNotes(String name) async {
-    final data = {"name": name};
-    final response = await newData(data, 'bar/categories', null);
-    final newTable = await CategoryResponse().jsonDecodeSingle(response);
+  newBuys(String name, String price, String date) async {
+    final data = {"name": name, "price": price, "datesBuy": date};
+    final response = await newData(data, 'bar/buys', null);
+    final newTable = await BuysResponse().jsonDecodeSingle(response);
     if (newTable != null) {
-      categories.add(newTable);
-      getNotes();
+      buys.add(newTable);
+      getBuys();
       return true;
     } else {
       return false;
     }
   }
 
-  updateCategory(String name, String id) async {
+  updateBuys(String name, String price, String date, String id) async {
     if (name.isNotEmpty) {
-      final data = {"id": id, "name": name};
-      final response = await updateData(data, 'bar/categories/$id');
-      final updateTable = await CategoryResponse().jsonDecodeSingle(response);
+      final data = {"id": id, "name": name, "price": price, "datesBuy": date};
+      final response = await updateData(data, 'bar/buys/$id');
+      final updateTable = await BuysResponse().jsonDecodeSingle(response);
       if (updateTable != null) {
-        final index = categories.indexWhere((table) => table.id == id);
-        categories[index] = updateTable;
-        getNotes();
+        final index = buys.indexWhere((table) => table.id == id);
+        buys[index] = updateTable;
+        getBuys();
         return true;
       } else {
         return false;
@@ -42,12 +42,12 @@ class NotesProvider extends ChangeNotifier with BackService {
     }
   }
 
-  removeCategory(String id) async {
+  removeBuys(String id) async {
     if (id.isNotEmpty) {
-      final response = removeData('bar/categories/$id');
-      final index = categories.indexWhere((table) => table.id == id);
-      categories.removeAt(index);
-      getCategory();
+      final response = removeData('bar/buys/$id');
+      final index = buys.indexWhere((table) => table.id == id);
+      buys.removeAt(index);
+      getBuys();
       return response;
     }
   }

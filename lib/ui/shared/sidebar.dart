@@ -31,38 +31,74 @@ class Sidebar extends StatelessWidget {
           const Logo(),
           const SizedBox(height: 50),
           const TextSeparator(text: 'Administración'),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRouter, text: 'Categorias', icon: Icons.category_outlined, onPressed: () => navigateTo(Flurorouter.categoriesRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.productsRouter, text: 'Productos', icon: Icons.production_quantity_limits, onPressed: () => navigateTo(Flurorouter.productsRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.tableRouter, text: 'Mesas', icon: Icons.deck_outlined, onPressed: () => navigateTo(Flurorouter.tableRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.cardRouter, text: 'Tarjeta', icon: Icons.card_membership_outlined, onPressed: () => navigateTo(Flurorouter.cardRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.notesRouter, text: 'Notas', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.notesRouter)),
-
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.categoriesRouter,
+              text: 'Categorias',
+              icon: Icons.category_outlined,
+              onPressed: () => navigateTo(Flurorouter.categoriesRouter)),
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.productsRouter,
+              text: 'Productos',
+              icon: Icons.production_quantity_limits,
+              onPressed: () => navigateTo(Flurorouter.productsRouter)),
+          MenuItem(
+              isActive: sideMenuProvider.currentPage == Flurorouter.tableRouter,
+              text: 'Mesas',
+              icon: Icons.deck_outlined,
+              onPressed: () => navigateTo(Flurorouter.tableRouter)),
+          MenuItem(
+              isActive: sideMenuProvider.currentPage == Flurorouter.cardRouter,
+              text: 'Tarjeta',
+              icon: Icons.card_membership_outlined,
+              onPressed: () => navigateTo(Flurorouter.cardRouter)),
+          MenuItem(
+              isActive: sideMenuProvider.currentPage == Flurorouter.notesRouter,
+              text: 'Notas',
+              icon: Icons.today_outlined,
+              onPressed: () => navigateTo(Flurorouter.notesRouter)),
+          MenuItem(
+              isActive: sideMenuProvider.currentPage == Flurorouter.buysRouter,
+              text: 'Compras',
+              icon: Icons.monetization_on_outlined,
+              onPressed: () => navigateTo(Flurorouter.buysRouter)),
           const SizedBox(height: 40),
           const TextSeparator(text: 'Pedidos'),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.ordersRouter, text: 'Ordenes', icon: Icons.money_outlined , onPressed: () => navigateTo(Flurorouter.ordersRouter)),
-
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.ordersRouter,
+              text: 'Ordenes',
+              icon: Icons.money_outlined,
+              onPressed: () => navigateTo(Flurorouter.ordersRouter)),
           const SizedBox(height: 40),
           const TextSeparator(text: 'Reportes'),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.salesRouter, text: 'Total', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.salesRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.salesTodayRouter, text: 'Diaría', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.salesTodayRouter)),
-          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.salesMonthRouter, text: 'Mensual', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.salesMonthRouter)),
+          MenuItem(
+              isActive: sideMenuProvider.currentPage == Flurorouter.salesRouter,
+              text: 'Total',
+              icon: Icons.today_outlined,
+              onPressed: () => navigateTo(Flurorouter.salesRouter)),
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.salesTodayRouter,
+              text: 'Diaría',
+              icon: Icons.today_outlined,
+              onPressed: () => navigateTo(Flurorouter.salesTodayRouter)),
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.salesMonthRouter,
+              text: 'Mensual',
+              icon: Icons.today_outlined,
+              onPressed: () => navigateTo(Flurorouter.salesMonthRouter)),
         ],
       ),
     );
   }
 
   BoxDecoration buildBoxDecoration() => const BoxDecoration(
-    gradient: LinearGradient(
-      colors: [
+      gradient: LinearGradient(colors: [
         Color.fromARGB(255, 166, 4, 131),
         Color.fromARGB(255, 112, 5, 89),
-      ]
-    ),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black26,
-        blurRadius: 10
-      )
-    ]
-  );
+      ]),
+      boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)]);
 }
