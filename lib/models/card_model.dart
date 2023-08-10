@@ -3,7 +3,8 @@ class CardResponse {
 
   Future jsonDecodes(Map<String, dynamic> json) async {
     json.forEach((key, value) {
-      final category = CardValue(id: key, name: value["name"], date: value["created_at"]);
+      final category =
+          CardValue(id: key, name: value["name"], date: value["created_at"]);
       card.add(category);
     });
 
@@ -11,7 +12,8 @@ class CardResponse {
   }
 
   Future jsonDecodeSingle(Map<String, dynamic> json) async {
-    final category = CardValue(id: json['id'], name: json["name"], date: "null");
+    final category =
+        CardValue(id: json['id'], name: json["name"], date: "null");
     return category;
   }
 }
@@ -22,8 +24,8 @@ class CardValue {
   String date;
 
   CardValue({
-      required this.id,
-      required this.name,
-      required this.date,
+    required this.id,
+    required this.name,
+    required this.date,
   });
 }
