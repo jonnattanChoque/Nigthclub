@@ -35,7 +35,8 @@ class Sidebar extends StatelessWidget {
           MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.productsRouter, text: 'Productos', icon: Icons.production_quantity_limits, onPressed: () => navigateTo(Flurorouter.productsRouter)),
           MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.tableRouter, text: 'Mesas', icon: Icons.deck_outlined, onPressed: () => navigateTo(Flurorouter.tableRouter)),
           MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.cardRouter, text: 'Tarjeta', icon: Icons.card_membership_outlined, onPressed: () => navigateTo(Flurorouter.cardRouter)),
-          
+          MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.notesRouter, text: 'Notas', icon: Icons.today_outlined , onPressed: () => navigateTo(Flurorouter.notesRouter)),
+
           const SizedBox(height: 40),
           const TextSeparator(text: 'Pedidos'),
           MenuItem(isActive: sideMenuProvider.currentPage == Flurorouter.ordersRouter, text: 'Ordenes', icon: Icons.money_outlined , onPressed: () => navigateTo(Flurorouter.ordersRouter)),
