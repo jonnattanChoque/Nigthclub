@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/buys_provider.dart';
 import 'package:admin_dashboard/providers/card_provider.dart';
 import 'package:admin_dashboard/providers/categories_provider.dart';
 import 'package:admin_dashboard/providers/forms/card_form_provider.dart';
@@ -21,16 +22,17 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: const FirebaseOptions(
-    apiKey: "AIzaSyDqN6zI4ImQ_nQXQj-845HLEe3-qcR0YaY",
-    authDomain: "myappflutter-58850.firebaseapp.com",
-    projectId: "myappflutter-58850",
-    storageBucket: "myappflutter-58850.appspot.com",
-    messagingSenderId: "714173052209",
-    databaseURL: "https://myappflutter-58850-default-rtdb.firebaseio.com/",
-    appId: "1:714173052209:web:4e2d8fd2f40b4e93092c10",
-    measurementId: "G-70TM2N1PBT"
-  ));
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyDqN6zI4ImQ_nQXQj-845HLEe3-qcR0YaY",
+          authDomain: "myappflutter-58850.firebaseapp.com",
+          projectId: "myappflutter-58850",
+          storageBucket: "myappflutter-58850.appspot.com",
+          messagingSenderId: "714173052209",
+          databaseURL:
+              "https://myappflutter-58850-default-rtdb.firebaseio.com/",
+          appId: "1:714173052209:web:4e2d8fd2f40b4e93092c10",
+          measurementId: "G-70TM2N1PBT"));
 
   await LocalStorage.configurePreps();
   Flurorouter.configureRoutes();
@@ -49,11 +51,13 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(lazy: true, create: (_) => TablesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => CategoriesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => ProductsProvider()),
-        ChangeNotifierProvider(lazy: true, create: (_) => ProductFormProvider()),
+        ChangeNotifierProvider(
+            lazy: true, create: (_) => ProductFormProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => OrdersProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => SalesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => CardProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => CardFormProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => BuysProvider()),
       ],
       child: const MyApp(),
     );
@@ -61,7 +65,8 @@ class AppState extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
-  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.dark);
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.dark);
   const MyApp({super.key});
 
   @override
@@ -72,18 +77,17 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Admin Night Drinks',
-            
             initialRoute: Flurorouter.rootRouter,
             onGenerateRoute: Flurorouter.router.generator,
             navigatorKey: NavigationService.navigatorKey,
             scaffoldMessengerKey: NotificationsService.messageKey,
-            builder:(_, child) {
+            builder: (_, child) {
               final authProvider = Provider.of<AuthProvider>(context);
-              if(authProvider.authStatus == AuthStatus.checking) {
+              if (authProvider.authStatus == AuthStatus.checking) {
                 return const SplashLayout();
               }
-              
-              if(authProvider.authStatus == AuthStatus.authenticated) {
+
+              if (authProvider.authStatus == AuthStatus.authenticated) {
                 return DashBoardlayout(child: child!);
               } else {
                 return AuthLayout(child: child!);
@@ -93,7 +97,6 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
           );
-        }
-    );
+        });
   }
 }
