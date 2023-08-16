@@ -8,7 +8,7 @@ class ApiHtttp {
   static final rtdb = FirebaseDatabase.instanceFor(app: Firebase.app(), databaseURL: 'https://myappflutter-58850-default-rtdb.firebaseio.com/');
 
   static Future httpGetQuery(String base, String reference) async {
-    final resp = await rtdb.ref().orderByChild(reference);
+    final resp = rtdb.ref().orderByChild(reference);
     return resp.get();
   }
 
