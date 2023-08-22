@@ -2,6 +2,8 @@ import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/ui/views/blank_view.dart';
+import 'package:admin_dashboard/ui/views/buy_month_view.dart';
+import 'package:admin_dashboard/ui/views/buy_today_view.dart';
 import 'package:admin_dashboard/ui/views/buys_view.dart';
 import 'package:admin_dashboard/ui/views/card_view.dart';
 import 'package:admin_dashboard/ui/views/category_view.dart';
@@ -140,6 +142,28 @@ class DashboardHandlers {
         .setCurrentpageUrl(Flurorouter.salesMonthRouter);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const SalesMonthView();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler buyToday = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentpageUrl(Flurorouter.buyTodayRouter);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const BuyTodayView();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler buyMonth = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentpageUrl(Flurorouter.buyMonthRouter);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const BuyMonthView();
     } else {
       return const LoginView();
     }

@@ -20,6 +20,8 @@ class Flurorouter {
   static String salesRouter = '/dashboard/sales';
   static String salesTodayRouter = '/dashboard/salestoday';
   static String salesMonthRouter = '/dashboard/salesmonth';
+  static String buyTodayRouter = '/dashboard/buytoday';
+  static String buyMonthRouter = '/dashboard/buymonth';
   static String notesRouter = '/dashboard/notes';
   static String buysRouter = '/dashboard/buys';
 
@@ -64,6 +66,12 @@ class Flurorouter {
         transitionType: TransitionType.fadeIn);
     router.define(salesMonthRouter,
         handler: DashboardHandlers.salesMonth,
+        transitionType: TransitionType.fadeIn);
+    router.define(buyTodayRouter,
+        handler: DashboardHandlers.buyToday,
+        transitionType: TransitionType.fadeIn);
+    router.define(buyMonthRouter,
+        handler: DashboardHandlers.buyMonth,
         transitionType: TransitionType.fadeIn);
     router.define(buysRouter,
         handler: DashboardHandlers.buys, transitionType: TransitionType.fadeIn);

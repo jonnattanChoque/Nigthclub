@@ -129,7 +129,6 @@ class _BuyModalState extends State<BuyModal> {
                   if (id == null) {
                     var response =
                         await buysProvider.newBuys(name, price, date);
-                    print(response);
                     if (response) {
                       NotificationsService.showSnackBar('Compra creada', false);
                     }

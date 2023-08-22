@@ -4,7 +4,6 @@ import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/services/navigation_service.dart';
 import 'package:flutter/material.dart';
-import 'package:admin_dashboard/ui/shared/widgets/logo.dart';
 import 'package:admin_dashboard/ui/shared/widgets/menu_item.dart';
 import 'package:provider/provider.dart';
 import 'widgets/text_separator.dart';
@@ -28,9 +27,7 @@ class Sidebar extends StatelessWidget {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          const Logo(),
-          const SizedBox(height: 50),
-          const TextSeparator(text: 'Administración'),
+          const SizedBox(height: 20),
           MenuItem(
               isActive:
                   sideMenuProvider.currentPage == Flurorouter.categoriesRouter,
@@ -90,6 +87,20 @@ class Sidebar extends StatelessWidget {
               text: 'Mensual',
               icon: Icons.today_outlined,
               onPressed: () => navigateTo(Flurorouter.salesMonthRouter)),
+          const SizedBox(height: 40),
+          const TextSeparator(text: 'Gastos'),
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.buyTodayRouter,
+              text: 'Diarío',
+              icon: Icons.today_outlined,
+              onPressed: () => navigateTo(Flurorouter.buyTodayRouter)),
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.buyMonthRouter,
+              text: 'Mensual',
+              icon: Icons.today_outlined,
+              onPressed: () => navigateTo(Flurorouter.buyMonthRouter)),
         ],
       ),
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:math';
 import 'package:admin_dashboard/datatables/orders_source.dart';
 import 'package:admin_dashboard/models/table_model.dart';
