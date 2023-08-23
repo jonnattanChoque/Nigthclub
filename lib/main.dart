@@ -3,6 +3,7 @@ import 'package:admin_dashboard/providers/card_provider.dart';
 import 'package:admin_dashboard/providers/categories_provider.dart';
 import 'package:admin_dashboard/providers/forms/card_form_provider.dart';
 import 'package:admin_dashboard/providers/forms/product_form_provider.dart';
+import 'package:admin_dashboard/providers/notes_provider.dart';
 import 'package:admin_dashboard/providers/orders_provider.dart';
 import 'package:admin_dashboard/providers/products_provider.dart';
 import 'package:admin_dashboard/providers/sales_provider.dart';
@@ -51,13 +52,13 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(lazy: true, create: (_) => TablesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => CategoriesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => ProductsProvider()),
-        ChangeNotifierProvider(
-            lazy: true, create: (_) => ProductFormProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => ProductFormProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => OrdersProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => SalesProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => CardProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => CardFormProvider()),
         ChangeNotifierProvider(lazy: true, create: (_) => BuysProvider()),
+        ChangeNotifierProvider(lazy: true, create: (_) => NotesProvider ()),
       ],
       child: const MyApp(),
     );

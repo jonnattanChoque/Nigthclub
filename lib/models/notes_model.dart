@@ -3,7 +3,7 @@ class NoteResponse {
 
   Future jsonDecodes(Map<String, dynamic> json) async {
     json.forEach((key, value) {
-      final category = NotesValue(id: key, details: value["details"], date: value["created_at"]);
+      final category = NotesValue(id: key, details: value["details"], dates: value["dates"], title: value["title"]);
       notes.add(category);
     });
 
@@ -11,7 +11,11 @@ class NoteResponse {
   }
 
   Future jsonDecodeSingle(Map<String, dynamic> json) async {
-    final category = NotesValue(id: json['id'], details: json["details"], date: "null");
+    final category = NotesValue(
+      id: json["id"], 
+      details: json["details"], 
+      title: json["title"], 
+      dates: json["dates"]);
     return category;
   }
 }
@@ -19,11 +23,13 @@ class NoteResponse {
 class NotesValue {
   String id;
   String details;
-  String date;
+  String dates;
+  String title;
 
   NotesValue({
       required this.id,
       required this.details,
-      required this.date,
+      required this.dates,
+      required this.title
   });
 }
